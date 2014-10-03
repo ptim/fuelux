@@ -8,7 +8,7 @@
 
 // -- BEGIN UMD WRAPPER PREFACE --
 
-// For more information on UMD visit: 
+// For more information on UMD visit:
 // https://github.com/umdjs/umd/blob/master/jqueryPlugin.js
 
 (function (factory) {
@@ -21,7 +21,7 @@
 	}
 }(function ($) {
 	// -- END UMD WRAPPER PREFACE --
-		
+
 	// -- BEGIN MODULE CODE HERE --
 
 	var old = $.fn.wizard;
@@ -47,7 +47,7 @@
 		this.$prevBtn.on('click.fu.wizard', $.proxy(this.previous, this));
 		this.$nextBtn.on('click.fu.wizard', $.proxy(this.next, this));
 		this.$element.on('click.fu.wizard', 'li.complete', $.proxy(this.stepclicked, this));
-		
+
 		this.selectedItem(this.options.selectedItem);
 
 		if( this.options.disablePreviousStep ) {
@@ -200,7 +200,8 @@
 			$stepContent.find('.step-pane[data-step="' + target + '"]:first').addClass('active');
 
 			// reset the wizard position to the left
-			this.$element.find('.steps').first().attr('style','margin-left: 0');
+			// edit: don't move the steps around, after all
+			// this.$element.find('.steps').first().attr('style','margin-left: 0');
 
 			// check if the steps are wider than the container div
 			var totalWidth = 0;
@@ -213,23 +214,24 @@
 			} else {
 				containerWidth = this.$element.width();
 			}
-			if (totalWidth > containerWidth) {
-			
-				// set the position so that the last step is on the right
-				var newMargin = totalWidth - containerWidth;
-				this.$element.find('.steps').first().attr('style','margin-left: -' + newMargin + 'px');
-				
-				// set the position so that the active step is in a good
-				// position if it has been moved out of view
-				if (this.$element.find('li.active').first().position().left < 200) {
-					newMargin += this.$element.find('li.active').first().position().left - 200;
-					if (newMargin < 1) {
-						this.$element.find('.steps').first().attr('style','margin-left: 0');
-					} else {
-						this.$element.find('.steps').first().attr('style','margin-left: -' + newMargin + 'px');
-					}
-				}
-			}
+			// edit: don't move the steps around, after all
+			// if (totalWidth > containerWidth) {
+
+			// 	// set the position so that the last step is on the right
+			// 	var newMargin = totalWidth - containerWidth;
+			// 	this.$element.find('.steps').first().attr('style','margin-left: -' + newMargin + 'px');
+
+			// 	// set the position so that the active step is in a good
+			// 	// position if it has been moved out of view
+			// 	if (this.$element.find('li.active').first().position().left < 200) {
+			// 		newMargin += this.$element.find('li.active').first().position().left - 200;
+			// 		if (newMargin < 1) {
+			// 			this.$element.find('.steps').first().attr('style','margin-left: 0');
+			// 		} else {
+			// 			this.$element.find('.steps').first().attr('style','margin-left: -' + newMargin + 'px');
+			// 		}
+			// 	}
+			// }
 
 			// only fire changed event after initializing
 			if(typeof(this.initialized) !== 'undefined' ) {
