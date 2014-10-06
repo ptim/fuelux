@@ -143,12 +143,18 @@
 				i++;
 			});
 
+			// console.log( 'removeSteps before:'+ this.numSteps );
 			this.syncSteps();
 			this.numSteps = $steps.find('li').length;
+			// console.log( 'removeSteps after:'+ this.numSteps );
 			this.setState();
 		},
 
 		setState: function () {
+			// console.log( 'setState:'+ this.numSteps );
+			// tim: do a fresh count here, because numSteps seems cached!
+			this.numSteps = this.$element.find('.steps li').length;
+			// console.log( 'setState:'+ this.numSteps );
 			var canMovePrev = (this.currentStep > 1);
 			var firstStep = (this.currentStep === 1);
 			var lastStep = (this.currentStep === this.numSteps);
@@ -164,6 +170,7 @@
 				this.lastText = last;
 				// replace text
 				var text = this.nextText;
+				// debugger;
 				if ( lastStep === true ) {
 					text = this.lastText;
 					// add status class to wizard
@@ -264,9 +271,12 @@
 		},
 
 		syncSteps: function(){
+			// tim: syncsteps seems to be running twice! (and once with cached values?)
+			// console.log( 'syncSteps:'+ this.numSteps );
 			var i = 1;
 			var $steps = this.$element.find('.steps');
 			var $stepContent = this.$element.find('.step-content');
+			// debugger;
 
 			$steps.children().each(function(){
 				var item = $(this);
